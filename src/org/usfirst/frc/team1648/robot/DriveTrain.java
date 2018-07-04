@@ -21,23 +21,41 @@ public class DriveTrain {
 	}
 	public void setSpeed(double left, double right) {
 		try {
-			this.left.set(ControlMode.PercentOutput, left);
 			this.left1.getDeviceID();
+		} catch (NullPointerException e) {
+			this.right1.neutralOutput();
+			System.out.println("The 1st victor on the left side of the robot isn't connected to it's port.");
+		}
+		try {
 			this.left2.getDeviceID();
 		} catch (NullPointerException e) {
-			this.left.set(ControlMode.PercentOutput, 0);
-			this.right.set(ControlMode.PercentOutput, 0);
-			System.out.println("One of the motors on the left side of the robot isn't connected to it's port.");
+			this.right2.neutralOutput();
+			System.out.println("The 2st victor on the left side of the robot isn't connected to it's port.");
+		}
+		try {
+			this.right1.getDeviceID();
+		} catch (NullPointerException e) {
+			this.left1.neutralOutput();
+			System.out.println("The 1st victor on the right side of the robot isn't connected to it's port.");
+		}
+		try {
+			this.right2.getDeviceID();
+		} catch (NullPointerException e) {
+			this.left2.neutralOutput();
+			System.out.println("The 2nd victor on the left side of the robot isn't connected to it's port.");
+		}
+		try {
+			this.left.set(ControlMode.PercentOutput, left);
+		} catch (NullPointerException e) {
+			this.right.neutralOutput();
+			System.out.println("The talon on the left side of the robot isn't connected to it's port.");
 		}
 		try {
 			this.right.set(ControlMode.PercentOutput, right);
-			this.right1.getDeviceID();
-			this.right2.getDeviceID();
 		} catch (NullPointerException e) {
-			this.right.set(ControlMode.PercentOutput, 0);
-			this.left.set(ControlMode.PercentOutput, 0);
-			System.out.println("One of the motors on the right side of the robot isn't connected to it's port.");
-
+			this.left.neutralOutput();
+			System.out.println("The talon on the right side of the robot isn't connected to it's port.");
 		}
+
 	}
 }
