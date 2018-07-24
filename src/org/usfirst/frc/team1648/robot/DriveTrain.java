@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class DriveTrain {
 	private TalonSRX left, right;
 	private VictorSPX left1, left2, right1, right2;
+	private VictorSPX[] victors = new VictorSPX[4];
+	private TalonSRX[] talons = new TalonSRX[2];
 	public DriveTrain() {
 		left = new TalonSRX(0);
 		right = new TalonSRX(10);
@@ -20,42 +22,21 @@ public class DriveTrain {
 		right2.follow(right);
 	}
 	public void setSpeed(double left, double right) {
-		try {
-			this.left1.getDeviceID();
-		} catch (NullPointerException e) {
-			this.right1.neutralOutput();
-			System.out.println("The 1st victor on the left side of the robot isn't connected to it's port.");
+		for(int i=0;i<4;i++) {
+			try {
+			this.talons[i].getDeviceID();
+			} catch (NullPointerException e) {
+			this.talons[(i+2)%4].neutralOutput();
+			System.out.println("The victor " + talons[i] + "isn't connected to it's port.");
+			}
 		}
-		try {
-			this.left2.getDeviceID();
-		} catch (NullPointerException e) {
-			this.right2.neutralOutput();
-			System.out.println("The 2st victor on the left side of the robot isn't connected to it's port.");
+		for(int i=0;i<2;i++) {
+			try {
+				this.talons[i].set(ControlMode.PercentOutput, left);
+			} catch (NullPointerException e) {
+				this.talons[(i+1)%2].neutralOutput();
+				System.out.println("The talon on the " + talons[i] + "side of the robot isn't connected to it's port.");
+			}
 		}
-		try {
-			this.right1.getDeviceID();
-		} catch (NullPointerException e) {
-			this.left1.neutralOutput();
-			System.out.println("The 1st victor on the right side of the robot isn't connected to it's port.");
-		}
-		try {
-			this.right2.getDeviceID();
-		} catch (NullPointerException e) {
-			this.left2.neutralOutput();
-			System.out.println("The 2nd victor on the left side of the robot isn't connected to it's port.");
-		}
-		try {
-			this.left.set(ControlMode.PercentOutput, left);
-		} catch (NullPointerException e) {
-			this.right.neutralOutput();
-			System.out.println("The talon on the left side of the robot isn't connected to it's port.");
-		}
-		try {
-			this.right.set(ControlMode.PercentOutput, right);
-		} catch (NullPointerException e) {
-			this.left.neutralOutput();
-			System.out.println("The talon on the right side of the robot isn't connected to it's port.");
-		}
-
 	}
 }

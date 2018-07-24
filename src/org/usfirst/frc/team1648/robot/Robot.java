@@ -7,10 +7,21 @@ import edu.wpi.first.wpilibj.IterativeRobot;;
 public class Robot extends IterativeRobot {
 	DriveTrain driveTrain;
 	XboxController xboxDriver;
+	long time = System.currentTimeMillis();
 	@Override
 	public void robotInit() {
 		driveTrain = new DriveTrain();
 		xboxDriver = new XboxController(0);
+	}
+	@Override
+	public void autonomousInit() {
+	}
+	
+	@Override
+	public void autonomousPeriodic() {
+		if(time<=10) {
+			driveTrain.setSpeed(1, 1);
+		}
 	}
 
 	/**
