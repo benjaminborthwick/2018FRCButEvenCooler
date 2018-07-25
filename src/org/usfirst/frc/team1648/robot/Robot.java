@@ -7,11 +7,15 @@ import edu.wpi.first.wpilibj.IterativeRobot;;
 public class Robot extends IterativeRobot {
 	DriveTrain driveTrain;
 	XboxController xboxDriver;
+	XboxController xboxOperator;
+	elevator elevator;
 	long time = System.currentTimeMillis();
 	@Override
 	public void robotInit() {
 		driveTrain = new DriveTrain();
 		xboxDriver = new XboxController(0);
+		xboxOperator = new XboxController(1);
+		elevator = new elevator();
 	}
 	@Override
 	public void autonomousInit() {
@@ -30,6 +34,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.setSpeed(xboxDriver.getLeftYAxis() + xboxDriver.getRightXAxis(), xboxDriver.getLeftYAxis() - xboxDriver.getRightXAxis());
+		elevator.setElevatorSpeed(xboxOperator.getRightYAxis());
 	}
 
 	/**

@@ -20,6 +20,9 @@ public class DriveTrain {
 		left2.follow(left);
 		right1.follow(right);
 		right2.follow(right);
+		right.setInverted(true);
+		right1.setInverted(true);
+		right2.setInverted(true);
 	}
 	public void setSpeed(double left, double right) {
 		for(int i=0;i<4;i++) {
