@@ -20,13 +20,16 @@ public class Elevator {
 	public Elevator() {
 		talon1 = new TalonSRX(20);
 		talon2 = new TalonSRX(21);
+		
 		sensor1 = new DigitalInput(1);
 		sensor2 = new DigitalInput(2);
+		
 		//settings on talons
 		talon2.setInverted(true);
 		talon2.follow(talon1);
 		talon1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		talon1.setSelectedSensorPosition(0, 0, 10);
+		
 		talon1.config_kP(0, 1, 10);
 		talon1.config_kD(0, 0.1, 10);
 		talon1.config_kI(0, 0.5, 10);
