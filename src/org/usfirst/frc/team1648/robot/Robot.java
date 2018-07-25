@@ -11,6 +11,7 @@ public class Robot extends IterativeRobot {
 	XboxController xboxOperator;
 	Elevator elevator;
 	long time = System.currentTimeMillis();
+	int autoStep;
 	
 	/**
 	 * Initiates objects
@@ -28,6 +29,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		autoStep = 1;
 	}
 	
 	/**
@@ -35,12 +37,16 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		//full speed for 10 seconds
-		if(time<=10) {
-			driveTrain.setSpeed(1, 1);
+		switch(autoStep) {
+			case 1:
+				if(driveTrain.driveForwards(30)) {
+					autoStep++;
+				}
+				break;
+			case 2:
+				elevator.setHeight(30);
+				break;
 		}
-		//move elevator to height of 10 inches
-		elevator.setHeight(10);
 	}
 
 	/**
