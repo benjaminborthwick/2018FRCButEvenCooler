@@ -5,10 +5,15 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class DriveTrain {
+	//declaring objects
 	private TalonSRX left, right;
 	private VictorSPX left1, left2, right1, right2;
 	private VictorSPX[] victors = new VictorSPX[4];
 	private TalonSRX[] talons = new TalonSRX[2];
+	
+	/**
+	 * Constructor
+	 */
 	public DriveTrain() {
 		left = new TalonSRX(0);
 		right = new TalonSRX(10);
@@ -24,6 +29,12 @@ public class DriveTrain {
 		right1.setInverted(true);
 		right2.setInverted(true);
 	}
+	
+	/**
+	 * sets speed of the drive train
+	 * @param left
+	 * @param right
+	 */
 	public void setSpeed(double left, double right) {
 		for(int i=0;i<4;i++) {
 			try {
