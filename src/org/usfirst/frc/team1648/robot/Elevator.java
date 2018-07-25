@@ -5,16 +5,19 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-
-public class elevator {
+/**
+ * Goes up and down
+ *
+ */
+public class Elevator {
 	//declaring objects
 	TalonSRX talon1, talon2;
 	DigitalInput sensor1, sensor2;
 	
 	/**
-	 * constructor
+	 * Constructs an elevator with two motors and two sensors
 	 */
-	public elevator() {
+	public Elevator() {
 		talon1 = new TalonSRX(20);
 		talon2 = new TalonSRX(21);
 		sensor1 = new DigitalInput(1);
@@ -32,7 +35,7 @@ public class elevator {
 	}
 	
 	/**
-	 * sets the speed of the elevator
+	 * Sets the speed of the elevator with limit switches at max and bottom height
 	 * @param speed
 	 */
 	public void setElevatorSpeed(double speed) {
@@ -42,7 +45,7 @@ public class elevator {
 	}
 	
 	/**
-	 * goes to a certain height
+	 * Goes to a certain height
 	 * @param height
 	 */
 	public void setHeight(double height) {

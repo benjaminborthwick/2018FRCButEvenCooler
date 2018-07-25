@@ -3,16 +3,21 @@ package org.usfirst.frc.team1648.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
+/**
+ * Drives
+ * @author David
+ *
+ */
 public class DriveTrain {
-	//declaring objects
+	//declaring talons
 	private TalonSRX left, right;
+	private TalonSRX[] talons = new TalonSRX[2];
+	//declaring victors
 	private VictorSPX left1, left2, right1, right2;
 	private VictorSPX[] victors = new VictorSPX[4];
-	private TalonSRX[] talons = new TalonSRX[2];
 	
 	/**
-	 * Constructor
+	 * Constructs a drive train with 6 motors
 	 */
 	public DriveTrain() {
 		left = new TalonSRX(0);
