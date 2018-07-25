@@ -22,6 +22,7 @@ public class elevator {
 		talon1.config_kD(0, 0.1, 10);
 		talon1.config_kI(0, 0.5, 10);
 		talon1.configClosedloopRamp(2, 10);
+		talon1.configAllowableClosedloopError(0, 500, 10);
 	}
 	
 	public void setElevatorSpeed(double speed) {
@@ -32,7 +33,7 @@ public class elevator {
 	public void setHeight(double height) {
 		//height is in inches
 		talon1.set(ControlMode.Position, height*4080);
-		if(!sensor1.get()||!sensor2.get()) {
+		if((!sensor1.get()&&height>72)||(!sensor2.get()&&height<0)) {
 			talon1.set(ControlMode.PercentOutput, 0);
 		}
 	}

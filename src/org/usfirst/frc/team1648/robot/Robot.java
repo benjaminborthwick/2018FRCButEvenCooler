@@ -5,6 +5,7 @@ import org.usfirst.frc.team1648.utilities.*;
 import edu.wpi.first.wpilibj.IterativeRobot;;
 
 public class Robot extends IterativeRobot {
+
 	DriveTrain driveTrain;
 	XboxController xboxDriver;
 	XboxController xboxOperator;
@@ -26,6 +27,7 @@ public class Robot extends IterativeRobot {
 		if(time<=10) {
 			driveTrain.setSpeed(1, 1);
 		}
+		elevator.setHeight(10);
 	}
 
 	/**
