@@ -15,13 +15,25 @@ public class elevator {
 		sensor1 = new DigitalInput(1);
 		sensor2 = new DigitalInput(2);
 		talon2.setInverted(true);
+		talon2.follow(talon1);
 		talon1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 		talon1.setSelectedSensorPosition(0, 0, 10);
+		talon1.config_kP(0, 1, 10);
+		talon1.config_kD(0, 0.1, 10);
+		talon1.config_kI(0, 0.5, 10);
+		talon1.configClosedloopRamp(2, 10);
 	}
 	
 	public void setElevatorSpeed(double speed) {
-		if(sensor1.get()&&sensor2.get()) {
+		if((speed>0&&sensor1.get())||(speed<0&&sensor2.get())) {
 			this.talon1.set(ControlMode.PercentOutput, speed);
+		}
+	}
+	public void setHeight(double height) {
+		//height is in inches
+		talon1.set(ControlMode.Position, height*4080);
+		if(!sensor1.get()||!sensor2.get()) {
+			talon1.set(ControlMode.PercentOutput, 0);
 		}
 	}
 }
