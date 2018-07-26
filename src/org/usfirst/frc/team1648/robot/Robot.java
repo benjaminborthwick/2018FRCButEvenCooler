@@ -2,7 +2,8 @@ package org.usfirst.frc.team1648.robot;
 
 import org.usfirst.frc.team1648.utilities.*;
 
-import edu.wpi.first.wpilibj.IterativeRobot;;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Solenoid;;
 
 public class Robot extends IterativeRobot {
 	//declaring subsystems
@@ -12,6 +13,7 @@ public class Robot extends IterativeRobot {
 	Elevator elevator;
 	long time = System.currentTimeMillis();
 	int autoStep;
+	Solenoid solenoid;
 	
 	/**
 	 * Initiates objects
@@ -22,6 +24,7 @@ public class Robot extends IterativeRobot {
 		xboxDriver = new XboxController(0);
 		xboxOperator = new XboxController(1);
 		elevator = new Elevator();
+		solenoid = new Solenoid(1);
 	}
 	
 	/**
@@ -45,6 +48,7 @@ public class Robot extends IterativeRobot {
 				break;
 			case 2:
 				elevator.setHeight(30);
+				solenoid.set(true);
 				break;
 		}
 	}
