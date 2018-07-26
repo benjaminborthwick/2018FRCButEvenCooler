@@ -11,9 +11,10 @@ public class Robot extends IterativeRobot {
 	XboxController xboxDriver;
 	XboxController xboxOperator;
 	Elevator elevator;
+	Turret turret;
+	//declaring variables
 	long time = System.currentTimeMillis();
 	int autoStep;
-	Solenoid solenoid;
 	
 	/**
 	 * Initiates objects
@@ -24,7 +25,7 @@ public class Robot extends IterativeRobot {
 		xboxDriver = new XboxController(0);
 		xboxOperator = new XboxController(1);
 		elevator = new Elevator();
-		solenoid = new Solenoid(1);
+		turret = new Turret();
 	}
 	
 	/**
@@ -42,13 +43,25 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		switch(autoStep) {
 			case 1:
+				//moves the robot forwards 30 inches
 				if(driveTrain.driveForwards(30)) {
 					autoStep++;
 				}
 				break;
 			case 2:
+				//brings the elevator up 30 inches
 				elevator.setHeight(30);
-				solenoid.set(true);
+				autoStep++;
+				break;
+			case 3:
+				//angles the turret's pitch to 45 degrees
+				if(turret.setPitch(45)) {
+					//angles the turret's yaw to -45 degrees
+					if(turret.setYaw(-45)) {
+						//fires turret
+						turret.fireTrigger();
+					}
+				}
 				break;
 		}
 	}
@@ -61,7 +74,19 @@ public class Robot extends IterativeRobot {
 		//set drivetrain speeds
 		driveTrain.setSpeed(xboxDriver.getLeftYAxis() + xboxDriver.getRightXAxis(), xboxDriver.getLeftYAxis() - xboxDriver.getRightXAxis());
 		//set elevator speeds
-		elevator.setElevatorSpeed(xboxOperator.getRightYAxis());
+		elevator.setElevatorSpeed(xboxOperator.getLeftYAxis());
+		//moves pitch of turret up and down
+		if(xboxOperator.getRawButtonPressed(6)) {
+			turret.rotatePitch(1);
+		} else if(xboxOperator.getRawButton(5)) {
+			turret.rotatePitch(-1);
+		} else {
+			turret.rotatePitch(0);
+		}
+		//set turret yaw speeds
+		turret.rotateYaw(xboxOperator.getRightXAxis());
+		//fire turret
+		turret.fireTrigger();
 	}
 
 	/**

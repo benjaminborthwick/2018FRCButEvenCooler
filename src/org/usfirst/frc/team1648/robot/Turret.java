@@ -26,7 +26,7 @@ public class Turret {
 		//TODO tune constants
 		pitch.config_kP(0, 1, 10);
 		pitch.config_kD(0, 0.1, 10);
-		pitch.configAllowableClosedloopError(0, 22.7555, 10);
+		pitch.configAllowableClosedloopError(0, 23, 10);
 		yaw.config_kP(0,  1, 10);
 		yaw.config_kD(0, 0.1, 10);
 		yaw.configAllowableClosedloopError(0, 30, 10);
@@ -56,7 +56,7 @@ public class Turret {
 	}
 	
 	public void rotateYaw(double velocity) {
-		yaw.set(ControlMode.PercentOutput, velocity);
+		yaw.set(ControlMode.PercentOutput, velocity*0.1);
 	}
 	
 	public boolean setYaw(double angle) {
